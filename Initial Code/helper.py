@@ -1,6 +1,7 @@
 import logging
 import pandas as pd
 import os
+import shutil
 class Helper:
     def __init__(self, dirname="Dataset", user_excel_name="users.xlsx", course_excel_name="courses.xlsx"):
         logging.basicConfig()
@@ -90,17 +91,32 @@ class Helper:
             logging.info(f"Excel file '{self.course_excel_name}' created and data written successfully.")
 
 
-
-
     def read_from_excel(self, excel_file_path, column_name, column_value):
         df = pd.read_excel(excel_file_path)
         row = df.loc[df[column_name] == column_value]
         logging.info(f"column name is return {column_name}")
         return row
 
+
     def clean_up(self):
-        """Clean  all data(directory with excel files and log file) created during code execution """
-        # logging.shutdown(), before delete shutdown the logging file
-        pass
+        confirm = input(f"Do you want to delete '{self.dirname}' and log file '{self.logname}'? (yes/no): ").strip().lower()
+
+        if confirm == "yes":
+            if os.path.exists(self.dirname):
+                shutil.rmtree(self.dirname)
+                print(f"Directory '{self.dirname}' deleted.")
+            else:
+                print(f"Directory '{self.dirname}' does not exist.")
+
+            if os.path.exists(self.logname):
+                print(f"Log file '{self.logname}' deleted.")
+            else:
+                print(f"Log file '{self.logname}' does not exist.")
+
+            logging.shutdown()
+            if os.path.exists(self.logname):
+                os.remove(self.logname)
+        else:
+            print("Files and the directory are not deleted.")
 
 
