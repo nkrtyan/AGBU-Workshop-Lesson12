@@ -3,16 +3,17 @@ import pandas as pd
 import os
 import shutil
 class Helper:
-    def __init__(self, dirname="Dataset", user_excel_name="users.xlsx", course_excel_name="courses.xlsx"):
-        logging.basicConfig()
+    def __init__(self, dirname="Dataset", user_excel_name="users.xlsx", course_excel_name="courses.xlsx", logname="project.log"):
+
         self.dirname = dirname
         self.user_excel_name = user_excel_name
         self.course_excel_name = course_excel_name
+        self.logname= logname
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s [%(levelname)s] %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",
-            filename="project.log",
+            filename=self.logname,
             filemode="a",
             encoding="utf-8",
         )
