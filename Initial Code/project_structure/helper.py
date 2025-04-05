@@ -36,17 +36,16 @@ class Helper:
         """ Create excel "users.xlsx", in case file doesn't exists
         Excel sheet should contain username, email, password, account_balance, user_role, logged_in columns
         """
-        
         data = {
-            "username": excel_data["username"],
-            "email": excel_data["email"],
-            "password": excel_data["password"],
-            "account_balance": excel_data["account_balance"],
-            "user_role": excel_data["user_role"],
-            "logged_in": excel_data["logged_in"],
-        }    
+        "username": [excel_data["username"]],
+        "email": [excel_data["email"]],
+        "password": [excel_data["password"]],
+        "account_balance": [excel_data["account_balance"]],
+        "user_role": [excel_data["user_role"]],
+        "logged_in": [excel_data["logged_in"]],
+    }   
         file_path = os.path.join(self.dirname, self.user_excel_name)
-
+        
         if not os.path.exists(file_path):
             df = pd.DataFrame(data)
             df.to_excel(file_path, index=False)
