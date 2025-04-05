@@ -1,8 +1,9 @@
 import logging
+import pandas as pd
 import os
-
 class Helper:
     def __init__(self, dirname="Dataset", user_excel_name="users.xlsx", course_excel_name="courses.xlsx"):
+        logging.basicConfig()
         self.dirname = dirname
         self.user_excel_name = user_excel_name
         self.course_excel_name = course_excel_name
@@ -14,21 +15,19 @@ class Helper:
             filemode="a",
             encoding="utf-8",
         )
-
         logging.info(f"The name of directory is {dirname}")
         logging.info(f"The name of users excel is {user_excel_name}")
         logging.info(f"The course excel name is {course_excel_name}")
 
-
     def create_dir(self):
+        """Create dirname=<Dataset> folder, return folder path"""
         if not os.path.exists(self.dirname):
             os.mkdir(self.dirname)
             logging.info(f"Directory {self.dirname} was created")
         else:
             logging.info(f"Directory {self.dirname} already exists")
         return os.path.abspath(self.dirname)
-    
-
+   
     def create_and_write_users_excel(self, excel_data):
         """ Create excel "users.xlsx", in case file doesn't exists
         Excel sheet should contain username, email, password, account_balance, user_role, logged_in columns
@@ -43,13 +42,10 @@ class Helper:
 
 
     def read_from_excel(self, excel_file_path, column_name, column_value):
-        """Read row data from corresponding excel by column_value name. 
-        FYI: Get row based on column name. Example
-        df = pandas.read_excel("data.xlsx")
-        row = df.loc[df["Name"]] == "Alice"
-        """
-        pass
-
+        df = pd.read_excel(excel_file_path)
+        row = df.loc[df[column_name] == column_value]
+        logging.info(f"column name is return {column_name}")
+        return row
 
     def clean_up(self):
         """Clean  all data(directory with excel files and log file) created during code execution """
