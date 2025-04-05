@@ -1,4 +1,5 @@
 import logging
+import pandas as pd
 class Helper:
     def __init__(self, dirname="Dataset", user_excel_name="users.xlsx", course_excel_name="courses.xlsx"):
         logging.basicConfig()
@@ -23,14 +24,11 @@ class Helper:
         pass
 
 
-    def read_from_excel(self, excel_file_path, column_name, column_value):
-        """Read row data from corresponding excel by column_value name. 
-        FYI: Get row based on column name. Example
-        df = pandas.read_excel("data.xlsx")
-        row = df.loc[df["Name"]] == "Alice"
-        """
-        pass
-
+    def readRow(self, excel_file_path, column_name, column_value):
+        df = pd.read_excel(excel_file_path)
+        row = df.loc[df[column_name] == column_value]
+        logging.info(f"column name is return {column_name}")
+        return row
 
     def clean_up(self):
         """Clean  all data(directory with excel files and log file) created during code execution """
